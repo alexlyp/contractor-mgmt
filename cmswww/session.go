@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -192,6 +193,7 @@ func (c *cmswww) login(l *v1.Login) loginReplyWithError {
 	// Check the user's password.
 	err = bcrypt.CompareHashAndPassword(user.HashedPassword,
 		[]byte(l.Password))
+	fmt.Println(user.HashedPassword, l.Password)
 	if err != nil {
 		if !IsUserLocked(user.FailedLoginAttempts) {
 			user.FailedLoginAttempts = user.FailedLoginAttempts + 1

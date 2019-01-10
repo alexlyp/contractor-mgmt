@@ -211,6 +211,7 @@ func validatePubkey(publicKey string) ([]byte, error) {
 }
 
 func (c *cmswww) validateUsername(username string, userToMatch *database.User) error {
+	username = strings.Trim(username, "\n")
 	if len(username) < v1.PolicyMinUsernameLength ||
 		len(username) > v1.PolicyMaxUsernameLength {
 		log.Tracef("Username not within bounds: %s", username)
