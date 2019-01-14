@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"encoding/hex"
+	"fmt"
 	"net/http"
 	"strconv"
 	"time"
@@ -130,6 +131,7 @@ func (c *cmswww) HandleRegister(
 
 	// Check that the verification token matches.
 	if !bytes.Equal(token, user.RegisterVerificationToken) {
+		fmt.Println(token, user.RegisterVerificationToken)
 		return nil, v1.UserError{
 			ErrorCode: v1.ErrorStatusVerificationTokenInvalid,
 		}

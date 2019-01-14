@@ -24,6 +24,7 @@ var (
 	// the ErrorStatusInvalidEmailOrPassword response is specific to a bad email
 	// or bad password.
 	minimumLoginWaitTime = 500 * time.Millisecond
+	sessionMaxAge        = 86400 //One day
 )
 
 type loginReplyWithError struct {
@@ -252,6 +253,35 @@ func (c *cmswww) login(l *v1.Login) loginReplyWithError {
 		reply: reply,
 		err:   err,
 	}
+}
+
+// handleMe returns logged in user information.
+func (c *cmswww) HandleMe(
+	req interface{},
+	user *database.User,
+	w http.ResponseWriter,
+	r *http.Request) (interface{}, error) {
+	log.Tracef("handleMe")
+
+	user, err := c.GetSessionUser(r)
+	if err != nil {
+		RespondWithError(w, r, 0,
+			"handleMe: getSessionUser %v", err)
+		return nil, err
+	}
+
+	reply, err := c.CreateLoginReply(user, user.LastLogin)
+	if err != nil {
+		RespondWithError(w, r, 0,
+			"handleMe: CreateLoginReply %v", err)
+		return nil, err
+	}
+
+	// Set session max age
+	//reply.SessionMaxAge = sessionMaxAge
+
+	util.RespondWithJSON(w, http.StatusOK, *reply)
+	return reply, err
 }
 
 // ProcessLogin checks that a user exists, is verified, and has
