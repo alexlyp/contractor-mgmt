@@ -165,24 +165,22 @@ func (c *cmswww) HandleRegister(
 	if err != nil {
 		return nil, err
 	}
-	/*
-			// Validate the signature against the public key.
-			sig, err := util.ConvertSignature(nu.Signature)
-			if err != nil {
-				return nil, v1.UserError{
-					ErrorCode: v1.ErrorStatusInvalidSignature,
-				}
-			}
-		pi, err := identity.PublicIdentityFromBytes(pk)
-		if err != nil {
-			return nil, err
+	// Validate the signature against the public key.
+	sig, err := util.ConvertSignature(nu.Signature)
+	if err != nil {
+		return nil, v1.UserError{
+			ErrorCode: v1.ErrorStatusInvalidSignature,
 		}
-			if !pi.VerifyMessage([]byte(nu.VerificationToken), sig) {
-				return nil, v1.UserError{
-					ErrorCode: v1.ErrorStatusInvalidSignature,
-				}
-			}
-	*/
+	}
+	pi, err := identity.PublicIdentityFromBytes(pk)
+	if err != nil {
+		return nil, err
+	}
+	if !pi.VerifyMessage([]byte(nu.VerificationToken), sig) {
+		return nil, v1.UserError{
+			ErrorCode: v1.ErrorStatusInvalidSignature,
+		}
+	}
 	// Hash the user's password.
 	hashedPassword, err := hashPassword(nu.Password)
 	if err != nil {
