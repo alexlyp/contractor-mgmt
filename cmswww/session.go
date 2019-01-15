@@ -280,7 +280,7 @@ func (c *cmswww) HandleMe(
 	// Set session max age
 	//reply.SessionMaxAge = sessionMaxAge
 
-	util.RespondWithJSON(w, http.StatusOK, *reply)
+	//util.RespondWithJSON(w, http.StatusOK, *reply)
 	return reply, err
 }
 
