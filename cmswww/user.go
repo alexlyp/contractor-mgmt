@@ -143,7 +143,7 @@ func (c *cmswww) HandleRegister(
 			ErrorCode: v1.ErrorStatusVerificationTokenExpired,
 		}
 	}
-
+	fmt.Println(nu.PublicKey)
 	// Ensure we got a proper pubkey.
 	pk, err := validatePubkey(nu.PublicKey)
 	if err != nil {

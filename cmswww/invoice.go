@@ -17,6 +17,8 @@ import (
 
 	"github.com/decred/contractor-mgmt/cmswww/api/v1"
 	"github.com/decred/contractor-mgmt/cmswww/database"
+
+	"github.com/davecgh/go-spew/spew"
 )
 
 var (
@@ -802,11 +804,14 @@ func (c *cmswww) HandleSubmitInvoice(
 	w http.ResponseWriter,
 	r *http.Request,
 ) (interface{}, error) {
+	spew.Dump(req)
 	ni := req.(*v1.SubmitInvoice)
 
+	spew.Dump(ni)
 	err := validateInvoice(ni.Signature, ni.PublicKey, ni.File.Payload,
 		int(ni.Month), int(ni.Year), user)
 	if err != nil {
+		fmt.Println(err)
 		return nil, err
 	}
 
@@ -917,9 +922,9 @@ func (c *cmswww) HandleSubmitInvoice(
 	if err != nil {
 		return nil, err
 	}
-
 	nir.CensorshipRecord = convertInvoiceCensorFromPD(
 		pdNewRecordReply.CensorshipRecord)
+	spew.Dump(nir)
 	return &nir, nil
 }
 

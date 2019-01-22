@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"reflect"
 
+	"github.com/davecgh/go-spew/spew"
 	"github.com/decred/politeia/util"
 	"github.com/gorilla/mux"
 
@@ -101,7 +102,7 @@ func (c *cmswww) addPostRoute(
 
 	wrapper := func(w http.ResponseWriter, r *http.Request) {
 		req := reflect.New(reflectReqType).Interface()
-
+		spew.Dump(r.Body)
 		// Get the command.
 		decoder := json.NewDecoder(r.Body)
 		if err := decoder.Decode(req); err != nil {

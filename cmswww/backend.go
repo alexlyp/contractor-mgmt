@@ -111,7 +111,7 @@ func (c *cmswww) LoadInventory() error {
 	if err != nil {
 		return fmt.Errorf("LoadInventory: %v", err)
 	}
-
+	fmt.Println("fetched remote inventory", inv)
 	err = c.initializeInventory(inv)
 	if err != nil {
 		return fmt.Errorf("initializeInventory: %v", err)

@@ -11,6 +11,8 @@ import (
 	v1 "github.com/decred/contractor-mgmt/cmswww/api/v1"
 	"github.com/decred/contractor-mgmt/cmswww/database"
 	pd "github.com/decred/politeia/politeiad/api/v1"
+
+	"github.com/davecgh/go-spew/spew"
 )
 
 type BackendInvoiceMetadata struct {
@@ -137,6 +139,7 @@ func (c *cmswww) convertRecordToDatabaseInvoice(p pd.Record) (*database.Invoice,
 				return nil, fmt.Errorf("could not decode metadata '%v' token '%v': %v",
 					p.Metadata, p.CensorshipRecord.Token, err)
 			}
+			spew.Dump(mdGeneral)
 
 			dbInvoice.Month = mdGeneral.Month
 			dbInvoice.Year = mdGeneral.Year
