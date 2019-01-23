@@ -209,6 +209,7 @@ func (c *cmswww) HandlePolicy(
 		MinUsernameLength:      v1.PolicyMinUsernameLength,
 		MaxUsernameLength:      v1.PolicyMaxUsernameLength,
 		UsernameSupportedChars: v1.PolicyUsernameSupportedChars,
+		MaxCommentLength:       v1.PolicyMaxCommentLength,
 		ListPageSize:           v1.ListPageSize,
 		ValidMIMETypes: []string{
 			"text/plain; charset=utf-8",

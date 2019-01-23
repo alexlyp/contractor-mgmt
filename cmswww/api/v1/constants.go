@@ -34,6 +34,10 @@ const (
 	// PolicyMinUsernameLength is the min length of a username
 	PolicyMinUsernameLength = 3
 
+	// PolicyMaxCommentLength is the maximum number of characters
+	// accepted for comments
+	PolicyMaxCommentLength = 8000
+
 	// PolicyInvoiceCommentChar is the character which, when used as the first
 	// character of a line, denotes that entire line as a comment.
 	PolicyInvoiceCommentChar rune = '#'

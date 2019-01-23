@@ -167,6 +167,10 @@ func (c *cmswww) SetupRoutes() {
 	c.addPostRoute(v1.RouteEditUserExtendedPublicKey,
 		c.HandleEditUserExtendedPublicKey, v1.EditUserExtendedPublicKey{},
 		permissionLogin, false)
+	c.addGetRoute(v1.RouteComments, c.HandleCommentsGet, v1.GetCommentsReply{},
+		permissionLogin, false)
+	c.addPostRoute(v1.RouteNewComment, c.HandleNewComment, v1.NewCommentReply{},
+		permissionLogin, false)
 
 	// Routes that require being logged in as an admin user.
 	c.addPostRoute(v1.RouteInviteNewUser, c.HandleInviteNewUser,

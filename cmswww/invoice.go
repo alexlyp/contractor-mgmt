@@ -14,6 +14,7 @@ import (
 	"github.com/decred/dcrd/dcrutil"
 	pd "github.com/decred/politeia/politeiad/api/v1"
 	"github.com/decred/politeia/util"
+	"github.com/gorilla/mux"
 
 	"github.com/decred/contractor-mgmt/cmswww/api/v1"
 	"github.com/decred/contractor-mgmt/cmswww/database"
@@ -1027,4 +1028,37 @@ func (c *cmswww) HandleEditInvoice(
 		Invoice: *convertDatabaseInvoiceToInvoice(dbInvoice),
 	}
 	return reply, nil
+}
+
+// handleNewComment handles incomming comments.
+func (c *cmswww) HandleNewComment(
+	req interface{},
+	user *database.User,
+	w http.ResponseWriter, r *http.Request) (interface{}, error) {
+	sc := req.(*v1.NewComment)
+
+	cr, err := c.backend.ProcessComment(sc, user)
+	if err != nil {
+		return nil, err
+	}
+
+	return cr, nil
+}
+
+// handleCommentsGet handles batched comments get.
+func (c *cmswww) HandleCommentsGet(
+	req interface{},
+	user *database.User,
+	w http.ResponseWriter, r *http.Request) (interface{}, error) {
+	gc := req.(*v1.GetComments)
+
+	pathParams := mux.Vars(r)
+	token := pathParams["token"]
+
+	gcr, err := c.backend.ProcessCommentGet(token, user)
+	if err != nil {
+		return nil, err
+	}
+
+	return gcr, nil
 }
