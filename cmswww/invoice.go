@@ -1055,10 +1055,25 @@ func (c *cmswww) HandleCommentsGet(
 	pathParams := mux.Vars(r)
 	token := pathParams["token"]
 
-	gcr, err := c.backend.ProcessCommentGet(token, user)
+	c, err := b.getComments(token)
 	if err != nil {
 		return nil, err
 	}
+
+	if user != nil {
+		// gets the last accesstime for the given proposal
+		if user.ProposalCommentsAccessTimes != nil {
+			c.AccessTime = user.ProposalCommentsAccessTimes[token]
+		} else {
+			user.ProposalCommentsAccessTimes = make(map[string]int64)
+		}
+		user.ProposalCommentsAccessTimes[token] = time.Now().Unix()
+		err = b.db.UserUpdate(*user)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return c, nil
 
 	return gcr, nil
 }

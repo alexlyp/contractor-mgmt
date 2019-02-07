@@ -29,5 +29,5 @@ require (
 	github.com/lib/pq v1.0.0
 	github.com/mattn/go-sqlite3 v1.10.0 // indirect
 	golang.org/x/crypto v0.0.0-20190103213133-ff983b9c42bc
-	golang.org/x/net v0.0.0-20190110200230-915654e7eabc
+	golang.org/x/net v0.0.0-20190125091013-d26f9f9a57f3
 )
